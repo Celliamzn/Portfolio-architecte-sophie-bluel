@@ -204,4 +204,19 @@ footer nav ul {
 	border: 1px  #1D6154 solid;
 	background-color: transparent;
 	font-size: 14px;
+	cursor: pointer;
 }
+
+.active {
+	color: white !important;
+	background-color: #1D6154 !important;
+}
+
+
+
+/**** 
+			<button id="btn-tous" class="active" onclick="filter(0)">Tous</button>
+			<button id="btn-objets" onclick="filter(1)">Objets</button>
+			<button id="btn-appartements" onclick="filter(2)">Appartements</button>
+			<button id="btn-hotels-et-restaurants" onclick="filter(3)">Hotels & restaurants</button>
+			**/

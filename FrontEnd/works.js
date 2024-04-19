@@ -1,14 +1,15 @@
 // Initialisation 
-let boutonObjets 
+let boutonObjets
 let boutonApparts
 let boutonHotelEtRestaurants 
 let boutonTous 
-let works = [];
+let works = []
 
 // Fonction de récupération des catégories via l'API
 async function genererCategories() {
     const responseCat = await fetch("http://localhost:5678/api/categories");
     const categories = await responseCat.json()
+
     const filtres = document.querySelector(".filtres")  
     const btnTous = document.createElement("button")
     btnTous.setAttribute("onclick","filter(0)")
@@ -16,6 +17,7 @@ async function genererCategories() {
     btnTous.classList.add("active")
     btnTous.innerText = "Tous"
     filtres.appendChild(btnTous)
+    
     for (let i=0; i<categories.length; i++){
         const category = categories[i]
         const nomBouton = document.createElement("button")
@@ -108,17 +110,23 @@ function removeActiveClass() {
 //fonction pour le filtres
 function filter(category) {
     removeActiveClass()
-    if (category === 0){
+    switch (category) {
+        case 0:
         displayWorks(works)
         boutonTous.classList.add("active");
-    } else if (category === 1) {
+        break
+        case 1:
         boutonObjets.classList.add("active")
         displayWorks(works.filter((work)=> work.categoryId === 1))
-    }else if (category === 2) {
+        break
+        case 2:
         boutonApparts.classList.add("active")
         displayWorks(works.filter((work)=> work.categoryId === 2))
-    }else if (category === 3) {
+        break
+        case 3:
         boutonHotelEtRestaurants.classList.add("active")
         displayWorks(works.filter((work)=> work.categoryId === 3))
+        
+        break
     }
 }

@@ -213,10 +213,87 @@ footer nav ul {
 }
 
 
+/* Login */
 
-/**** 
-			<button id="btn-tous" class="active" onclick="filter(0)">Tous</button>
-			<button id="btn-objets" onclick="filter(1)">Objets</button>
-			<button id="btn-appartements" onclick="filter(2)">Appartements</button>
-			<button id="btn-hotels-et-restaurants" onclick="filter(3)">Hotels & restaurants</button>
-			**/
+.pageactive {
+	color: black;
+	font-weight: bold;
+}
+
+a, a:visited{
+	text-decoration: none;
+	color: black;
+}
+a:hover {
+	color: #B1663C;
+}
+
+
+
+.login {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+}
+
+.form-login {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 40%;
+}
+
+.form-login input {
+	border: none;
+	height: 50px;
+	box-shadow: -1px 2px 14px -6px #A5A5A5;
+}
+
+.form-login div {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.form-login label {
+	align-items: flex-start;
+	margin-top: 30px;
+	margin-bottom: 5px;
+}
+
+.mdpoublie {
+	text-decoration: underline;
+	color: black;
+}
+
+
+
+/* sticky footer */
+body {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+footer {
+	margin-top: auto;
+}
+
+
+html {
+	background-color: #fffef8;
+}
+
+footer {
+	background-color: white;
+}
+
+
+/* Mode Admin */
+
+.headerAdmin {
+	background-color: black;
+	color: white;
+	align-items: center;
+}

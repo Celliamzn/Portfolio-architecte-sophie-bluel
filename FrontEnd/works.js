@@ -1,3 +1,43 @@
+const login = document.getElementById("login")
+const logout = document.getElementById("logout")
+
+let token = window.localStorage.getItem("token");
+if (token !== null) {
+    modeEdition()
+} else {
+    genererCategories();
+}
+console.log(token)
+
+function modeEdition() {
+    //édition de la bannière
+    const headerAdmin = document.querySelector("body");
+    const elementHeader = document.createElement("div");
+    elementHeader.classList.add("admin")
+    elementHeader.innerHTML = '<p><i class="fa-regular fa-pen-to-square"></i>Mode édition</p>';
+    headerAdmin.insertBefore(elementHeader,headerAdmin.firstChild);
+    
+    //édition du bouton modifier
+    const endroitModifier = document.getElementById("modifier")
+    const buttonModifier = document.createElement("button");
+    buttonModifier.classList.add("buttonModifier modal-trigger")
+    buttonModifier.innerHTML = '<p><i class="fa-regular fa-pen-to-square"></i>modifier</p>';
+    endroitModifier.appendChild(buttonModifier)
+    
+    //logout remplace login
+    
+    login.hidden = true
+    logout.hidden = false
+
+    //cacher les filtres
+    const filtres = document.querySelector(".filtres");
+    filtres.hidden = true
+}
+
+logout.addEventListener("click", function() {
+    localStorage.removeItem("token")
+})
+
 // Initialisation 
 let boutonObjets
 let boutonApparts
@@ -9,7 +49,7 @@ let works = []
 async function genererCategories() {
     const responseCat = await fetch("http://localhost:5678/api/categories");
     const categories = await responseCat.json()
-
+    
     const filtres = document.querySelector(".filtres")  
     const btnTous = document.createElement("button")
     btnTous.setAttribute("onclick","filter(0)")
@@ -32,7 +72,7 @@ async function genererCategories() {
     boutonTous = document.getElementById("0")
 }
 //Utilisation de la fonction
-genererCategories();
+
 
 // Fonction de récuparation des works via l'API
 async function getWorks() {
@@ -65,40 +105,6 @@ async function displayWorks(works) {
 // Premier affichage de la page
 getWorks();
 
-/*** 
-// Ajout du listener pour filtrer les works par objets
-boutonObjets.addEventListener("click", function () {
-    removeActiveClass()
-    boutonObjets.classList.add("active");
-    const worksFiltered = works.filter((work)=> work.categoryId === 1);
-    displayWorks(worksFiltered);
-});
-
-// Ajout du listener pour filtrer les works par appartements
-
-boutonApparts.addEventListener("click", function () {
-    removeActiveClass()
-    boutonApparts.classList.add("active");
-    const worksFiltered = works.filter((work)=> work.categoryId === 2);
-    displayWorks(worksFiltered);
-});
-
-// Ajout du listener pour filtrer les works par hotels et restaurants
-boutonHotelEtRestaurants.addEventListener("click", function () {
-    removeActiveClass()
-    boutonHotelEtRestaurants.classList.add("active");
-    const worksFiltered = works.filter((work)=> work.categoryId === 3);
-    displayWorks(worksFiltered);
-});
-
-// Ajout du listener pour filtrer les works TOUS
-boutonTous.addEventListener("click", function () {
-    removeActiveClass()
-    boutonTous.classList.add("active");
-    displayWorks(works)
-});
-*/
-
 //fonction qui retire la classe active (pour affichage css)
 function removeActiveClass() {
     boutonApparts.classList.remove("active")
@@ -130,3 +136,4 @@ function filter(category) {
         break
     }
 }
+

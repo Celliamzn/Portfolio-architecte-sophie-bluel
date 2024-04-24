@@ -28,7 +28,12 @@ formulaireLogin.addEventListener("submit", async function (event) {
     } else {
         //enregistrer le token 
         token = response.token;
-        window.location.href = 'index.html' 
+        window.localStorage.setItem("token", token);
+        window.location.href = 'index.html';
     }
 }
 )
+
+
+    //('<div class="headerAdmin"><p><i class="fa-regular fa-pen-to-square"></i>Mode édition</p></div>')
+

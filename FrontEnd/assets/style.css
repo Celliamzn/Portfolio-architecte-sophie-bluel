@@ -287,13 +287,39 @@ html {
 
 footer {
 	background-color: white;
+	width: 100vw;
+	position: relative;
+	left: calc(-50vw + 50%);
 }
 
+footer nav {
+	margin-right: 250px;
+}
 
 /* Mode Admin */
 
-.headerAdmin {
+.admin {
 	background-color: black;
 	color: white;
 	align-items: center;
+	font-family: 'Work Sans';
+	text-align: center;
+	padding: 20px;
+	width: 100vw;
+	position: relative;
+	left: calc(-50vw + 50%);
 }
+
+.buttonModifier {
+	cursor: pointer;
+	border: none;
+	background-color: transparent;
+	vertical-align: middle;
+}
+
+.buttonModifier i,
+.admin i {
+	margin: 0 10px ;
+}
+
+

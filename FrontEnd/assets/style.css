@@ -323,3 +323,83 @@ footer nav {
 }
 
 
+
+/* Modale */
+
+.modal-contenu h3 {
+	font-size: 26px;
+	margin:  30px  0 30px 0;
+}
+
+.modal-container {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 100vh;
+}
+
+.modal-container img {
+	height: 102px;
+	width: 77px;
+	margin: 15px 5px;
+}
+
+.overlay {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #00000030;
+	
+}
+
+.modal {
+	width: 40%;
+	max-height: 100%;
+	padding: 20px 0 ;
+	background-color: white;
+	border-radius: 8px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
+.modal-close {
+	padding: 10px 15px;
+	font-size: 20px;
+	border: none;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+	background-color: white;
+}
+
+.modal-contenu {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+hr {
+	width: 70%;
+	color: b3b3b3;
+	margin: 50px 0 30px 0;
+}
+
+.ajoutWork {
+	border-radius: 20px;
+	padding: 10px 10px ;
+	font-family: 'Syne';
+	color: white;
+	border: 1px  #1D6154 solid;
+	background-color: #1D6154;
+	font-size: 14px;
+	cursor: pointer;
+	width: 40%;
+}
+.galleryEdit {
+	display: flex;
+	flex-wrap: wrap;
+	width: 75%;
+}

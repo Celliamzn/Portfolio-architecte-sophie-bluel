@@ -79,6 +79,8 @@ async function getWorks() {
     const response = await fetch("http://localhost:5678/api/works");
     works = await response.json();
     displayWorks(works);
+    displayWorksEdit(works);
+
 }
 
 // Affichage des works dans la div class="gallery"
@@ -137,3 +139,16 @@ function filter(category) {
     }
 }
 
+
+
+async function displayWorksEdit(works) {
+    const galleryEdit = document.querySelector(".galleryEdit");
+    for (let i = 0; i < works.length; i++) {        
+        const work = works[i];
+        const imgElement = document.createElement("img");
+        imgElement.src = work.imageUrl;
+        imgElement.alt = work.title;
+        galleryEdit.appendChild(imgElement)
+    }
+}
+displayWorksEdit();

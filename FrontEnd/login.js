@@ -4,6 +4,7 @@ message d'erreur si user / mdp pas correct
 PENSER A STOCKER TOKEN POUR LA SUITE 
 
 sophie.bluel@test.tld
+S0phie
 
 */
 let token = "";
@@ -34,6 +35,4 @@ formulaireLogin.addEventListener("submit", async function (event) {
 }
 )
 
-
-    //('<div class="headerAdmin"><p><i class="fa-regular fa-pen-to-square"></i>Mode édition</p></div>')
 

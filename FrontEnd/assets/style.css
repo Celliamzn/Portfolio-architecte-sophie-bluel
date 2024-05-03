@@ -327,7 +327,7 @@ aside {
 	left: calc(-50vw + 50%);
 }
 
-.modal-contenu h3 {
+.modal-works-edit h3 {
 	font-size: 26px;
 	margin:  30px  0 30px 0;
 }
@@ -380,7 +380,7 @@ aside {
 	background-color: white;
 }
 
-.modalPrecedent {
+.modalPrec {
 	padding: 10px 15px;
 	font-size: 20px;
 	border: none;
@@ -392,9 +392,7 @@ aside {
 }
 
 
-.modal-contenu {
-	display: flex;
-	flex-direction: column;
+.modal-works-edit {
 	align-items: center;
 	margin-left: auto;
 	margin-right: auto;
@@ -406,7 +404,7 @@ hr {
 	margin: 50px 0 30px 0;
 }
 
-.ajoutWork {
+.btn-add-work {
 	border-radius: 20px;
 	padding: 10px 10px ;
 	font-family: 'Syne';
@@ -417,7 +415,7 @@ hr {
 	cursor: pointer;
 	width: 40%;
 }
-.galleryEdit {
+.gallery-edit {
 	display: grid;
 	grid-template-columns:20% 20% 20% 20% 20%;
 	column-gap:5px;
@@ -448,3 +446,19 @@ hr {
 	position: relative;
 }
 
+.display {
+	display: flex;
+	flex-direction: column;
+}
+
+.display-none {
+	display: none;
+}
+
+.modal-add-work {
+	align-items: center;
+}
+
+.modal-add-work form {
+	
+}

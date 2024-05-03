@@ -47,11 +47,27 @@ let boutonHotelEtRestaurants
 let boutonTous 
 let works = []
 
+//Récupérer catégories via API
+async function genererChoixCategorie() {
+    const responseCat = await fetch("http://localhost:5678/api/categories");
+    const categories = await responseCat.json()
+    const selectionCategorie = document.getElementById("categorie")
+    for (let i=0; i<categories.length; i++){
+        const category = categories[i]
+        const optionCategorie = document.createElement("option")
+        optionCategorie.value = category
+        optionCategorie.innerText = category.name
+        selectionCategorie.appendChild(optionCategorie)
+    }
+}
+genererChoixCategorie()
+
 // Fonction de récupération des catégories via l'API
 async function genererCategories() {
     const responseCat = await fetch("http://localhost:5678/api/categories");
     const categories = await responseCat.json()
     
+    //mise des actégorie dans les choix pour l'ajout de works
     const filtres = document.querySelector(".filtres")  
     const btnTous = document.createElement("button")
     btnTous.setAttribute("onclick","filter(0)")
@@ -136,30 +152,33 @@ function filter(category) {
     }
 }
 
-let idSupp 
-let btnSupp
-const contenuModal = document.querySelector(".modal-contenu")
+const modalAjout = document.querySelector(".modal-add-work")
+const modalEdit = document.querySelector(".modal-works-edit")	
+const btnaddWork = document.querySelector(".btn-add-work")
+const btnPrecedent = document.querySelector(".modalPrec");
 
-//Afficher modale
-function afficherModal() {
-    const titreModal = document.createElement("h3")
-titreModal.innerText = "Galerie Photo"	
-const divGallery = document.createElement("div")
-divGallery.classList.add("galleryEdit")
-const barre = document.createElement("hr")
-const ajoutWork = document.createElement("button")
-ajoutWork.classList.add("ajoutWork")
-ajoutWork.innerText = "Ajouter une photo"
-contenuModal.appendChild(titreModal)
-contenuModal.appendChild(divGallery)
-contenuModal.appendChild(barre)
-contenuModal.appendChild(ajoutWork)
-}
+btnaddWork.addEventListener("click", () => {
+    modalAjout.classList.remove("display-none")
+    modalAjout.classList.add("display")
+    modalEdit.classList.remove("display")
+    modalEdit.classList.add("display-none")
+    btnPrecedent.hidden = false;
+})
 
-afficherModal()
+btnPrecedent.addEventListener("click", async () => {
+    
+    btnPrecedent.hidden = true
+    modalAjout.classList.remove("display")
+    modalAjout.classList.add("display-none")
+    modalEdit.classList.add("display")
+    modalEdit.classList.remove("display-none")
+})
+
+
+
 
 async function displayWorksEdit(_works) {
-    let galleryEdit = document.querySelector(".galleryEdit");
+    let galleryEdit = document.querySelector(".gallery-edit");
     galleryEdit.innerHTML = "";
     for (let i = 0; i < _works.length; i++) {        
         const work = _works[i];
@@ -196,8 +215,11 @@ modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
 
 function toggleModal() {
     modalContainer.classList.toggle("activEdit")
+    modalAjout.classList.remove("display")
+    modalAjout.classList.add("display-none")
+    modalEdit.classList.add("display")
+    modalEdit.classList.remove("display-none")
 }
-
 /* quitter modale avec echap */
 window.addEventListener('keydown', function (e) {
     if (e.key === "Escape" || e.key === "Esc") {
@@ -207,14 +229,3 @@ window.addEventListener('keydown', function (e) {
 
 
 // Modale ajouter photo :
-const addWork = document.querySelector(".ajoutWork");
-addWork.addEventListener("click", () => {
-    contenuModal.innerHTML=""
-    const btnPrecedent = document.querySelector(".modalPrecedent");
-    btnPrecedent.hidden = false;
-    btnPrecedent.addEventListener("click", async () => {
-        btnPrecedent.hidden = true
-        afficherModal()
-        await displayWorksEdit(works)
-    })
-})

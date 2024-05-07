@@ -19,32 +19,33 @@
 		<div class="modal-container" role="dialog">
 			<div class="overlay modalTrigger"></div>
 			<div class="modal">
-				<button class="modalPrec" hidden><i class="fa-solid fa-arrow-left"></i></button>
+				<button class="modal-precedent" hidden><i class="fa-solid fa-arrow-left"></i></button>
 				<button class="modal-close modalTrigger"><i class="fa-solid fa-xmark"></i></button>
-				<div class="modal-contenu">
-					<div class="modal-works-edit display ">
-						<h3>Galerie photo</h3>
-						<div class="gallery-edit">
+				<div class="modal-works-edit display ">
+					<h3>Galerie photo</h3>
+					<div class="gallery-edit">
+					</div>
+					<hr>
+					<button class="btn-add-work">Ajouter une photo</button>
+				</div>
+				<div class="modal-add-work display-none">
+					<h3>Ajout photo</h3>
+					<form action="#" method="post" class="display">
+						<div class="input-add-picture">
+								<i class="fa-regular fa-image space preview"></i>
+								<label for="picture" id="labelForPicture" >+ Ajouter photo</label>
+								<input type="file" required id="picture" accept=".png, .jpg" class="space" style="visibility: hidden;">
+							<p class="space picture-accepted">jpg, png : 4mo max</p>
 						</div>
+						<label for="title">Titre</label>
+						<input type="text" name="title" id="title" required>
+						<label for="category">Catégorie</label>
+						<select name="category" id="category" required>
+							<option value=""></option>
+						</select>
 						<hr>
-						<button class="btn-add-work">Ajouter une photo</button>
-					</div>
-					<div class="modal-add-work display-none">
-						<h3>Ajout photo</h3>
-						<form action="#" method="post" class="display">
-							<section class="choixPhoto">
-								<i class="fa-regular fa-image"></i>
-								<button id="btnAjoutPhoto">+ Ajouter photo</button>
-								<p>jpg, png : 4mo max</p>
-							</section>
-							<label for="titre">Titre</label>
-							<input type="text" name="titre" id="titre">
-							<label for="categorie">Catégorie</label>
-							<select name="categorie" id="categorie">
-							</select>
-							<input type="submit" value="Valider">
-						</form>
-					</div>
+						<input id="valider" type="submit" value="Valider" disabled>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -53,8 +54,8 @@
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
 			<ul>
-				<li>projets</li>
-				<li>contact</li>
+				<li><a href="index.html">projets</a></li>
+				<li><a href="#contact">contact</a></li>
 				<li id="login" ><a href="login.html">login</a></li>
 				<li id="logout" hidden><a href="index.html">logout</a></li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
@@ -75,7 +76,7 @@
 		</section>
 		<section id="portfolio">
 			<h2 id="modifier">Mes Projets</h2>
-			<div class="filtres">
+			<div class="filters">
 			</div>
 			<div class="gallery"></div>	
 		</div>

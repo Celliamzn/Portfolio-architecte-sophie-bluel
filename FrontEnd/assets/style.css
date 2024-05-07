@@ -188,14 +188,14 @@ footer nav ul {
 
 /* Ajout des boutons */
 
-.filtres {
+.filters {
 	display: flex;
 	justify-content: space-between;
 	width: 55%;
 	margin: 30px auto ;
 }
 
-.filtres button {
+.filters button {
 	border-radius: 20px;
 	padding: 6px 13px ;
 	font-family: 'Syne';
@@ -282,7 +282,7 @@ html {
 
 footer {
 	background-color: white;
-	width: 100vw;
+	width: 99vw;
 	position: relative;
 	left: calc(-50vw + 50%);	
 	margin-top: auto;
@@ -301,7 +301,7 @@ footer nav {
 	font-family: 'Work Sans';
 	text-align: center;
 	padding: 20px;
-	width: 100vw;
+	width: 97vw;
 	position: relative;
 	left: calc(-50vw + 50%);
 }
@@ -327,7 +327,7 @@ aside {
 	left: calc(-50vw + 50%);
 }
 
-.modal-works-edit h3 {
+h3 {
 	font-size: 26px;
 	margin:  30px  0 30px 0;
 }
@@ -380,7 +380,7 @@ aside {
 	background-color: white;
 }
 
-.modalPrec {
+.modal-precedent {
 	padding: 10px 15px;
 	font-size: 20px;
 	border: none;
@@ -392,7 +392,8 @@ aside {
 }
 
 
-.modal-works-edit {
+.modal-works-edit,
+.modal-add-work {
 	align-items: center;
 	margin-left: auto;
 	margin-right: auto;
@@ -400,11 +401,16 @@ aside {
 
 hr {
 	width: 70%;
-	color: b3b3b3;
-	margin: 50px 0 30px 0;
+	color: #b3b3b3;
+	margin-bottom: 30px;
 }
 
-.btn-add-work {
+.modal-add-work hr {
+	width: 100%;
+}
+
+.btn-add-work,
+#valider {
 	border-radius: 20px;
 	padding: 10px 10px ;
 	font-family: 'Syne';
@@ -414,16 +420,17 @@ hr {
 	font-size: 14px;
 	cursor: pointer;
 	width: 40%;
+	margin: auto !important;
 }
 .gallery-edit {
 	display: grid;
 	grid-template-columns:20% 20% 20% 20% 20%;
 	column-gap:5px;
 	row-gap: 25px;
-
+	margin-bottom: 20px;
 }
 
-.supprimerbtn {
+.deletebtn {
 	background-color: black;
 	color: white;
 	position: absolute;
@@ -437,12 +444,12 @@ hr {
 	cursor: pointer;
 }
 
-.supprimerbtn i {
+.deletebtn i {
 	font-size: 9px;
 	margin: auto;
 }
 
-.photoEtBtn {
+.picAndBtn {
 	position: relative;
 }
 
@@ -459,6 +466,69 @@ hr {
 	align-items: center;
 }
 
+#title, #category {
+	border: none;
+	height: 50px;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	margin: 0 0 20px 0;
+}
+
 .modal-add-work form {
-	
+	width: 63%;
+}
+
+.modal-add-work label {
+	margin: 20px 0 10px;
+	font-size: 14px;
+}
+.input-add-picture {
+	background-color: #e8f1f8;
+	width: 100%;
+	display: grid;
+	border-radius: 5px;
+}
+
+.space {
+	margin: 10px auto
+}
+
+
+.input-add-picture i {
+	color: #b9c5cc;
+	font-size: 76px;
+}
+
+#valider:disabled {
+	background-color: #a7a7a7;
+	border: none;
+}
+
+.input-add-picture label {
+	justify-self: center;
+	margin-top: 0;
+	margin-bottom: 0;
+	text-align: center;
+	border-radius: 50px;
+	background-color: #cbd6dc;
+	width: 45%;
+	height: 26px;
+	color: #306685;
+	font-size: medium;
+	cursor: pointer;
+	padding: 9px 0 1px;
+}
+
+.input-add-picture input {
+	display: none;
+}
+
+.picture-accepted {
+	font-size: 10px;
+}
+
+.margin-auto {
+	margin: auto;
+	width: 129px !important;
+	height: auto !important;
+	object-fit: cover;
 }

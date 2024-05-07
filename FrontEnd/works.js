@@ -10,8 +10,6 @@ if (token !== null) {
 }
 
 //Effet connexion / déconnexion
-
-
 logout.addEventListener("click", function() {
     localStorage.removeItem("token")
 })
@@ -231,11 +229,11 @@ genererChoixCategorie()
 
 // Modale ajouter photo :
 let newWork = new FormData()
-//Récupération des div html
+
 const inputPicture = document.getElementById("picture") 
 inputPicture.addEventListener("change", () => previewPicture())
 const divToPreview = document.querySelector(".input-add-picture")
-
+//Montrer la photo choisie si bien une image + bouton VALIDER vert et utilisable
 function previewPicture() {
     if(inputPicture.files[0].type.match('image.*')) {
         
@@ -262,15 +260,10 @@ const submit = document.getElementById("valider")
 const categoryName = inputCategory.options[inputCategory.selectedIndex]
 const categoryId = inputCategory.options[inputCategory.selectedIndex].id
 
-function formCompleted() {
-    if (inputTitle.value !== "" && inputPicture.files[0] !== undefined && parseInt(inputCategory.value)) {
-        submit.disabled = false
-    } 
-}
-
+//vérification remplissage du formulaire, ajouter work à l'API et fermeture de la modale
 submit.addEventListener("click", async (event) => {
     event.preventDefault()
-    let valide = formValidation(inputPicture.files[0], inputTitle.value, parseInt(inputCategory.value))
+    let valide = formValidation(inputTitle.value, parseInt(inputCategory.value))
     if (valide === true) {
         
         newWork.append('image', inputPicture.files[0])
@@ -288,11 +281,8 @@ submit.addEventListener("click", async (event) => {
     }
 })
 
-function formValidation(inputPicture, title, categoryId) {
-    if(inputPicture === undefined) {
-        alert("Veuillez ajouter une image")
-        return false
-    }
+//alert quand titre ou catégorie vide
+function formValidation(title, categoryId) {
     if (title.length === 0) {
         alert("veuillez ajouter un titre")
         console.log(categoryId)
@@ -306,6 +296,7 @@ function formValidation(inputPicture, title, categoryId) {
     }
 }
 
+//envoi du nouveau work à l'API
 async function addWorkOk(token, newWork) {
     await fetch('http://localhost:5678/api/works', {
     method: 'POST',

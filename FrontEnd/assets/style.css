@@ -369,25 +369,21 @@ h3 {
 	transform: translate(-50%,-50%);
 }
 
-.modal-close {
+.buttons-modal {
 	padding: 10px 15px;
 	font-size: 20px;
 	border: none;
-	position: absolute;
-	top: 10px;
-	right: 10px;
 	cursor: pointer;
 	background-color: white;
+	position: absolute;
+	top: 10px;
+}
+
+.modal-close {
+	right: 10px;
 }
 
 .modal-precedent {
-	padding: 10px 15px;
-	font-size: 20px;
-	border: none;
-	cursor: pointer;
-	background-color: white;
-	position: absolute;
-	top: 10px;
 	left: 10px;
 }
 

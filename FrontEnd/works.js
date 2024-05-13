@@ -1,18 +1,44 @@
 const login = document.getElementById("login")
 const logout = document.getElementById("logout")
 
-//Soit site basique avec les catégories soit admin avec le mode édition
-let token = window.localStorage.getItem("token");
-if (token !== null) {
-    modeEdit()
-} else {
-    generateCategories();
-}
+let categories
+let token
+let works = []
 
-//Effet connexion / déconnexion
+
+async function setup() {
+    // premierement, récupération catégories API
+   const responseCat = await fetch("http://localhost:5678/api/categories");
+    categories = await responseCat.json()
+
+    //Soit site basique avec les catégories soit admin avec le mode édition
+    token = window.localStorage.getItem("token");
+    if (token !== null) {
+        modeEdit()
+        genererChoixCategorie()
+    } else {
+        generateCategories();
+    }
+}
+setup()
+
+// Fonction de récuparation des works via l'API
+async function getWorks() {
+    const response = await fetch("http://localhost:5678/api/works");
+    works = await response.json();
+    await displayWorks(works);    
+}
+// Affichage de la page
+getWorks();
+
+
+
+//Effet déconnexion
 logout.addEventListener("click", function() {
     localStorage.removeItem("token")
 })
+
+const btnPrecedent = document.querySelector(".modal-precedent");
 
 //Mode édition 
 function modeEdit() {
@@ -27,10 +53,12 @@ function modeEdit() {
     const addButtonModifier = document.getElementById("modifier")
     const buttonModifier = document.createElement("button");
     buttonModifier.classList.add("buttonModifier")
-    buttonModifier.classList.add("modalTrigger")
     buttonModifier.innerHTML = '<p><i class="fa-regular fa-pen-to-square"></i>modifier</p>';
     addButtonModifier.appendChild(buttonModifier)
-    buttonModifier.addEventListener("click", async() => await displayWorksEdit(works))
+    buttonModifier.addEventListener("click", async() => {
+        toggleModal();
+        btnPrecedent.hidden = true
+        await displayWorksEdit(works)})
     
     //logout remplace login
     login.hidden = true 
@@ -46,12 +74,10 @@ let buttonObjets
 let buttonApparts
 let buttonHotelEtRestaurants 
 let buttonTous 
-let works = []
+
 
 // Fonction de récupération des catégories via l'API
 async function generateCategories() {
-    const responseCat = await fetch("http://localhost:5678/api/categories");
-    const categories = await responseCat.json()
     
     //construction des boutons filtres : tous en premier puis for pour les autres
     const filters = document.querySelector(".filters")  
@@ -77,12 +103,7 @@ async function generateCategories() {
     buttonTous = document.getElementById("0")
 }
 
-// Fonction de récuparation des works via l'API
-async function getWorks() {
-    const response = await fetch("http://localhost:5678/api/works");
-    works = await response.json();
-    await displayWorks(works);    
-}
+
 
 // Affichage des works dans la gallery
 async function displayWorks(works) {
@@ -105,8 +126,7 @@ async function displayWorks(works) {
     }
 }
 
-// Affichage de la page
-getWorks();
+
 
 //fonction qui retire la classe active (pour affichage css)
 function removeActiveClass() {
@@ -143,7 +163,7 @@ function filter(category) {
 const modalAdd = document.querySelector(".modal-add-work")
 const modalEdit = document.querySelector(".modal-works-edit")	
 const btnAddWork = document.querySelector(".btn-add-work")
-const btnPrecedent = document.querySelector(".modal-precedent");
+
 
 btnAddWork.addEventListener("click", () => {
     modalAdd.classList.remove("display-none")
@@ -195,7 +215,6 @@ async function displayWorksEdit(_works) {
 // trigger pour ouvrir/fermer modale
 const modalContainer = document.querySelector(".modal-container")
 const modalTriggers = document.querySelectorAll(".modalTrigger");
-
 modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
 
 function toggleModal() {
@@ -214,8 +233,6 @@ window.addEventListener('keydown', function (e) {
 
 // Choix catégorie du formulaire
 async function genererChoixCategorie() {
-    const responseCat = await fetch("http://localhost:5678/api/categories");
-    const categories = await responseCat.json()
     const selectionCategorie = document.getElementById("category")
     for (let i=0; i<categories.length; i++){
         const category = categories[i]
@@ -225,10 +242,9 @@ async function genererChoixCategorie() {
         selectionCategorie.appendChild(optionCategorie)
     }
 }
-genererChoixCategorie()
 
-// Modale ajouter photo :
-let newWork = new FormData()
+
+
 
 const inputPicture = document.getElementById("picture") 
 inputPicture.addEventListener("change", () => previewPicture())
@@ -263,13 +279,15 @@ const categoryId = inputCategory.options[inputCategory.selectedIndex].id
 //vérification remplissage du formulaire, ajouter work à l'API et fermeture de la modale
 submit.addEventListener("click", async (event) => {
     event.preventDefault()
+
+    let newWork = new FormData()
     let valide = formValidation(inputTitle.value, parseInt(inputCategory.value))
     if (valide === true) {
         
         newWork.append('image', inputPicture.files[0])
         newWork.append('title', inputTitle.value)
         newWork.append('category', parseInt(inputCategory.value))
-        await addWorkOk(token, newWork)
+        await addWork(token, newWork)
         await getWorks()
         await displayWorksEdit(works) 
         inputCategory.value = ""
@@ -297,12 +315,12 @@ function formValidation(title, categoryId) {
 }
 
 //envoi du nouveau work à l'API
-async function addWorkOk(token, newWork) {
+async function addWork(token, newWork) {
     await fetch('http://localhost:5678/api/works', {
-    method: 'POST',
-    body: newWork,
-    headers: { Authorization: `Bearer ${token}`}
-})
+        method: 'POST',
+        body: newWork,
+        headers: { Authorization: `Bearer ${token}`}
+    })
 }
 
 

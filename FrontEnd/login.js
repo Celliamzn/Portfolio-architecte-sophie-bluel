@@ -25,7 +25,7 @@ formulaireLogin.addEventListener("submit", async function (event) {
     // Nous réagissons aux deux possibilités de réponse :
     if (response.message === "user not found") {
         //créer une alerte
-        alert("E-mail et/ou mot de passe incorrecte(s)")
+        alert("E-mail et/ou mot de passe incorrect(s)")
     } else {
         //enregistrer le token 
         token = response.token;

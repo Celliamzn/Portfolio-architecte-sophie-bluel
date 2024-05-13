@@ -17,21 +17,25 @@ formulaireLogin.addEventListener("submit", async function (event) {
         password: event.target.querySelector("[name=password]").value,
     }
     const userTest = JSON.stringify(preUserTest);
-    const response = await (await fetch("http://localhost:5678/api/users/login", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: userTest
-    })).json()
-    // Nous réagissons aux deux possibilités de réponse :
-    if (response.message === "user not found") {
-        //créer une alerte
-        alert("E-mail et/ou mot de passe incorrect(s)")
-    } else {
-        //enregistrer le token 
-        token = response.token;
-        window.localStorage.setItem("token", token);
-        window.location.href = 'index.html';
-    }
+    const response = await fetch("http://localhost:5678/api/users/login", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: userTest
+})
+console.log(response)
+// Nous réagissons aux deux possibilités de réponse :
+if (response.status !== 200) {
+    //créer une alerte
+    alert("E-mail et/ou mot de passe incorrect(s)")
+} else {
+    //enregistrer le token 
+    token = (await response.json()).token;
+    window.localStorage.setItem("token", token);
+    console.log(response)
+    
+    window.location.href = 'index.html';
+    
+}
 }
 )
 

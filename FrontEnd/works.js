@@ -280,7 +280,7 @@ const categoryId = inputCategory.options[inputCategory.selectedIndex].id
 //vérification remplissage du formulaire, ajouter work à l'API et fermeture de la modale
 submit.addEventListener("click", async (event) => {
     event.preventDefault()
-    
+
     let newWork = new FormData()
     let valide = formValidation(inputTitle.value, parseInt(inputCategory.value))
     if (valide === true) {
@@ -291,17 +291,9 @@ submit.addEventListener("click", async (event) => {
         await addWork(token, newWork)
         await getWorks()
         await displayWorksEdit(works) 
-        newWork.delete('image')
-        newWork.delete('title')
-        newWork.delete('category')
         
-        
-        
-        inputCategory.value = ""
-        inputTitle.value = "" 
-        inputPicture.files[0].delete
-        inputPicture.value = null
-        submit.disabled = true
+        const formReset = document.getElementById("form-add")
+        formReset.reset()  
         divToPreview.innerHTML = '<div class="input-add-picture"><i class="fa-regular fa-image space preview"></i><label for="picture" id="labelForPicture" >+ Ajouter photo</label><input type="file" required id="picture" accept=".png, .jpg" class="space" style="visibility: hidden;"><p class="space picture-accepted">jpg, png : 4mo max</p></div>'
         
         modalContainer.classList.remove("activEdit")

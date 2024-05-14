@@ -246,7 +246,7 @@ async function generateChoiceCategorie() {
 
 const submit = document.getElementById("valider")  
 
-const inputPicture = document.getElementById("picture") 
+let inputPicture = document.getElementById("picture") 
 inputPicture.addEventListener("change", () => previewPicture())
 const divToPreview = document.querySelector(".input-add-picture")
 //Montrer la photo choisie si bien une image + bouton VALIDER vert et utilisable
@@ -295,7 +295,9 @@ submit.addEventListener("click", async (event) => {
         const formReset = document.getElementById("form-add")
         formReset.reset()  
         divToPreview.innerHTML = '<div class="input-add-picture"><i class="fa-regular fa-image space preview"></i><label for="picture" id="labelForPicture" >+ Ajouter photo</label><input type="file" required id="picture" accept=".png, .jpg" class="space" style="visibility: hidden;"><p class="space picture-accepted">jpg, png : 4mo max</p></div>'
-        
+        inputPicture = document.getElementById("picture")
+        inputPicture.addEventListener("change", () => previewPicture())
+        submit.disabled = true
         modalContainer.classList.remove("activEdit")
     }
 })

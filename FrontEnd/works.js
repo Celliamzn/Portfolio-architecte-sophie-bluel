@@ -1,6 +1,6 @@
+// Initialisation 
 const login = document.getElementById("login")
 const logout = document.getElementById("logout")
-
 let categories
 let token
 let works = []
@@ -39,7 +39,6 @@ logout.addEventListener("click", function() {
 })
 
 const btnPrecedent = document.querySelector(".modal-precedent");
-
 //Mode édition 
 function modeEdit() {
     //édition de la bannière
@@ -58,158 +57,158 @@ function modeEdit() {
     buttonModifier.addEventListener("click", async() => {
         toggleModal();
         btnPrecedent.hidden = true
-        await displayWorksEdit(works)})
-        
-        //logout remplace login
-        login.hidden = true 
-        logout.hidden = false
-        
-        //cacher les filtres
-        const filters = document.querySelector(".filters");
-        filters.hidden = true
-    }
-    
-    // Initialisation 
-    let buttonObjets
-    let buttonApparts
-    let buttonHotelEtRestaurants 
-    let buttonTous 
-    
-    
-    // Fonction de récupération des catégories via l'API
-    async function generateCategories() {
-        
-        //construction des boutons filtres : tous en premier puis for pour les autres
-        const filters = document.querySelector(".filters")  
-        const btnTous = document.createElement("button")
-        btnTous.setAttribute("onclick","filter(0)")
-        btnTous.setAttribute("id","0")
-        btnTous.classList.add("active")
-        btnTous.innerText = "Tous"
-        filters.appendChild(btnTous)
-        
-        for (let i=0; i<categories.length; i++){
-            const category = categories[i]
-            const nombutton = document.createElement("button")
-            nombutton.setAttribute("onclick",`filter(${category.id})`)
-            nombutton.innerText = category.name
-            nombutton.id = category.id
-            filters.appendChild(nombutton)
-        }
-        
-        buttonObjets = document.getElementById("1")
-        buttonApparts = document.getElementById("2")
-        buttonHotelEtRestaurants = document.getElementById("3")
-        buttonTous = document.getElementById("0")
-    }
-    
-    
-    
-    // Affichage des works dans la gallery
-    async function displayWorks(works) {
-        //Supprimer la galerie présente
-        const gallery = document.querySelector(".gallery");
-        gallery.innerHTML = "";
-        // Galerie avec les works demandés (tous au lancement)
-        for (let i = 0; i < works.length; i++) {        
-            const work = works[i];
-            const figureElement = document.createElement("figure");
-            const imgElement = document.createElement("img");
-            imgElement.src = work.imageUrl;
-            imgElement.alt = work.title;
-            const figcaptionElement = document.createElement("figcaption");
-            figcaptionElement.innerText = work.title;
-            
-            figureElement.appendChild(imgElement);
-            figureElement.appendChild(figcaptionElement);
-            gallery.appendChild(figureElement)
-        }
-    }
-    
-    
-    
-    //fonction qui retire la classe active (pour affichage css)
-    function removeActiveClass() {
-        buttonApparts.classList.remove("active")
-        buttonHotelEtRestaurants.classList.remove("active")
-        buttonObjets.classList.remove("active")
-        buttonTous.classList.remove("active")
-    }
-    
-    //fonction pour les filtres
-    function filter(category) {
-        removeActiveClass()
-        switch (category) {
-            case 0:
-            displayWorks(works)
-            buttonTous.classList.add("active");
-            break
-            case 1:
-            buttonObjets.classList.add("active")
-            displayWorks(works.filter((work)=> work.categoryId === 1))
-            break
-            case 2:
-            buttonApparts.classList.add("active")
-            displayWorks(works.filter((work)=> work.categoryId === 2))
-            break
-            case 3:
-            buttonHotelEtRestaurants.classList.add("active")
-            displayWorks(works.filter((work)=> work.categoryId === 3))
-            break
-        }
-    }
-    
-    // changement entre modale de la galerie et modal de nouveau work
-    const modalAdd = document.querySelector(".modal-add-work")
-    const modalEdit = document.querySelector(".modal-works-edit")	
-    const btnAddWork = document.querySelector(".btn-add-work")
-    
-    
-    btnAddWork.addEventListener("click", () => {
-        modalAdd.classList.remove("display-none")
-        modalAdd.classList.add("display")
-        modalEdit.classList.remove("display")
-        modalEdit.classList.add("display-none")
-        btnPrecedent.hidden = false;
+        await displayWorksEdit(works)
     })
     
-    btnPrecedent.addEventListener("click", () => {
-        
-        btnPrecedent.hidden = true
-        modalAdd.classList.remove("display")
-        modalAdd.classList.add("display-none")
-        modalEdit.classList.add("display")
-        modalEdit.classList.remove("display-none")
-    })
+    //logout remplace login
+    login.hidden = true 
+    logout.hidden = false
     
-    //affichage des works dans la modale EDIT donc rajout button delete à chaque image
-    async function displayWorksEdit(_works) {
-        let galleryEdit = document.querySelector(".gallery-edit");
-        galleryEdit.innerHTML = "";
-        for (let i = 0; i < _works.length; i++) {        
-            const work = _works[i];
-            const imgElement = document.createElement("img");
-            imgElement.src = work.imageUrl;
-            imgElement.alt = work.title;
-            imgElement.classList.add("editPhoto")
-            const deleteWork = document.createElement("btn")
-            deleteWork.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
-            deleteWork.classList.add("deletebtn")
-            deleteWork.setAttribute("id", `${_works[i]}`);
-            deleteWork.addEventListener("click", async (e) => {
-                await fetch(`http://localhost:5678/api/works/${_works[i].id}`, {
-                method: "DELETE",
-                headers: { Authorization: `Bearer ${token}`} 
-            }) 
-            await getWorks()
-            await displayWorksEdit(works)
-        });
-        const picAndBtn = document.createElement("div")
-        picAndBtn.classList.add("picAndBtn")
-        picAndBtn.appendChild(imgElement) 
-        picAndBtn.appendChild(deleteWork)
-        galleryEdit.appendChild(picAndBtn)
+    //cacher les filtres
+    const filters = document.querySelector(".filters");
+    filters.hidden = true
+}
+
+// Initialisation 
+let buttonObjets
+let buttonApparts
+let buttonHotelEtRestaurants 
+let buttonTous 
+
+// Fonction de récupération des catégories via l'API
+async function generateCategories() {
+    
+    //construction des boutons filtres : tous en premier puis for pour les autres
+    const filters = document.querySelector(".filters")  
+    const btnTous = document.createElement("button")
+    btnTous.setAttribute("onclick","filter(0)")
+    btnTous.setAttribute("id","0")
+    btnTous.classList.add("active")
+    btnTous.innerText = "Tous"
+    filters.appendChild(btnTous)
+    
+    for (let i=0; i<categories.length; i++){
+        const category = categories[i]
+        const nombutton = document.createElement("button")
+        nombutton.setAttribute("onclick",`filter(${category.id})`)
+        nombutton.innerText = category.name
+        nombutton.id = category.id
+        filters.appendChild(nombutton)
     }
+    
+    buttonObjets = document.getElementById("1")
+    buttonApparts = document.getElementById("2")
+    buttonHotelEtRestaurants = document.getElementById("3")
+    buttonTous = document.getElementById("0")
+}
+
+
+
+// Affichage des works dans la gallery
+async function displayWorks(works) {
+    //Supprimer la galerie présente
+    const gallery = document.querySelector(".gallery");
+    gallery.innerHTML = "";
+    // Galerie avec les works demandés (tous au lancement)
+    for (let i = 0; i < works.length; i++) {        
+        const work = works[i];
+        const figureElement = document.createElement("figure");
+        const imgElement = document.createElement("img");
+        imgElement.src = work.imageUrl;
+        imgElement.alt = work.title;
+        const figcaptionElement = document.createElement("figcaption");
+        figcaptionElement.innerText = work.title;
+        
+        figureElement.appendChild(imgElement);
+        figureElement.appendChild(figcaptionElement);
+        gallery.appendChild(figureElement)
+    }
+}
+
+
+
+//fonction qui retire la classe active (pour affichage css)
+function removeActiveClass() {
+    buttonApparts.classList.remove("active")
+    buttonHotelEtRestaurants.classList.remove("active")
+    buttonObjets.classList.remove("active")
+    buttonTous.classList.remove("active")
+}
+
+//fonction pour les filtres : affiche avec categoryId
+function filter(category) {
+    removeActiveClass()
+    switch (category) {
+        case 0:
+        displayWorks(works)
+        buttonTous.classList.add("active");
+        break
+        case 1:
+        buttonObjets.classList.add("active")
+        displayWorks(works.filter((work)=> work.categoryId === 1))
+        break
+        case 2:
+        buttonApparts.classList.add("active")
+        displayWorks(works.filter((work)=> work.categoryId === 2))
+        break
+        case 3:
+        buttonHotelEtRestaurants.classList.add("active")
+        displayWorks(works.filter((work)=> work.categoryId === 3))
+        break
+    }
+}
+
+// changement entre modale de la galerie et modal de nouveau work
+const modalAdd = document.querySelector(".modal-add-work")
+const modalEdit = document.querySelector(".modal-works-edit")	
+const btnAddWork = document.querySelector(".btn-add-work")
+
+
+btnAddWork.addEventListener("click", () => {
+    modalAdd.classList.remove("display-none")
+    modalAdd.classList.add("display")
+    modalEdit.classList.remove("display")
+    modalEdit.classList.add("display-none")
+    btnPrecedent.hidden = false;
+})
+
+btnPrecedent.addEventListener("click", () => {
+    
+    btnPrecedent.hidden = true
+    modalAdd.classList.remove("display")
+    modalAdd.classList.add("display-none")
+    modalEdit.classList.add("display")
+    modalEdit.classList.remove("display-none")
+})
+
+//affichage des works dans la modale EDIT donc rajout button delete à chaque image
+async function displayWorksEdit(_works) {
+    let galleryEdit = document.querySelector(".gallery-edit");
+    galleryEdit.innerHTML = "";
+    for (let i = 0; i < _works.length; i++) {        
+        const work = _works[i];
+        const imgElement = document.createElement("img");
+        imgElement.src = work.imageUrl;
+        imgElement.alt = work.title;
+        imgElement.classList.add("editPhoto")
+        const deleteWork = document.createElement("btn")
+        deleteWork.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
+        deleteWork.classList.add("deletebtn")
+        deleteWork.setAttribute("id", `${_works[i]}`);
+        deleteWork.addEventListener("click", async (e) => {
+            await fetch(`http://localhost:5678/api/works/${_works[i].id}`, {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}`} 
+        }) 
+        await getWorks()
+        await displayWorksEdit(works)
+    });
+    const picAndBtn = document.createElement("div")
+    picAndBtn.classList.add("picAndBtn")
+    picAndBtn.appendChild(imgElement) 
+    picAndBtn.appendChild(deleteWork)
+    galleryEdit.appendChild(picAndBtn)
+}
 }
 
 // trigger pour ouvrir/fermer modale
@@ -245,7 +244,6 @@ async function generateChoiceCategorie() {
 
 
 const submit = document.getElementById("valider")  
-
 let inputPicture = document.getElementById("picture") 
 inputPicture.addEventListener("change", () => previewPicture())
 const divToPreview = document.querySelector(".input-add-picture")
@@ -280,7 +278,7 @@ const categoryId = inputCategory.options[inputCategory.selectedIndex].id
 //vérification remplissage du formulaire, ajouter work à l'API et fermeture de la modale
 submit.addEventListener("click", async (event) => {
     event.preventDefault()
-
+    
     let newWork = new FormData()
     let valide = formValidation(inputTitle.value, parseInt(inputCategory.value))
     if (valide === true) {

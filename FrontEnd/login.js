@@ -1,7 +1,4 @@
-/* Mon but est :
-- Lorsque le form est rempli : redirection vers la page d'accueil si confirmée
-message d'erreur si user / mdp pas correct
-PENSER A STOCKER TOKEN POUR LA SUITE 
+/*  
 
 sophie.bluel@test.tld
 S0phie

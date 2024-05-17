@@ -5,7 +5,7 @@ let categories
 let token
 let works = []
 
-
+// Affichage de la page
 async function setup() {
     // premierement, récupération catégories API
     const responseCat = await fetch("http://localhost:5678/api/categories");
@@ -75,7 +75,7 @@ let buttonApparts
 let buttonHotelEtRestaurants 
 let buttonTous 
 
-// Fonction de récupération des catégories via l'API
+// Générate les catégories + boutons filtres
 async function generateCategories() {
     
     //construction des boutons filtres : tous en premier puis for pour les autres
@@ -181,6 +181,25 @@ btnPrecedent.addEventListener("click", () => {
     modalEdit.classList.remove("display-none")
 })
 
+// trigger pour ouvrir/fermer modale
+const modalContainer = document.querySelector(".modal-container")
+const modalTriggers = document.querySelectorAll(".modalTrigger");
+modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
+
+function toggleModal() {
+    modalContainer.classList.toggle("activEdit")
+    modalAdd.classList.remove("display")
+    modalAdd.classList.add("display-none")
+    modalEdit.classList.add("display")
+    modalEdit.classList.remove("display-none")
+}
+// quitter modale avec echap 
+window.addEventListener('keydown', function (e) {
+    if (e.key === "Escape" || e.key === "Esc") {
+        modalContainer.classList.remove("activEdit")
+    }
+})
+
 //affichage des works dans la modale EDIT donc rajout button delete à chaque image
 async function displayWorksEdit(_works) {
     let galleryEdit = document.querySelector(".gallery-edit");
@@ -211,24 +230,6 @@ async function displayWorksEdit(_works) {
 }
 }
 
-// trigger pour ouvrir/fermer modale
-const modalContainer = document.querySelector(".modal-container")
-const modalTriggers = document.querySelectorAll(".modalTrigger");
-modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
-
-function toggleModal() {
-    modalContainer.classList.toggle("activEdit")
-    modalAdd.classList.remove("display")
-    modalAdd.classList.add("display-none")
-    modalEdit.classList.add("display")
-    modalEdit.classList.remove("display-none")
-}
-// quitter modale avec echap 
-window.addEventListener('keydown', function (e) {
-    if (e.key === "Escape" || e.key === "Esc") {
-        modalContainer.classList.remove("activEdit")
-    }
-})
 
 // Choix catégorie du formulaire
 async function generateChoiceCategorie() {
@@ -242,7 +243,7 @@ async function generateChoiceCategorie() {
     }
 }
 
-
+// Ajout de l'image du formulaire
 const submit = document.getElementById("valider")  
 let inputPicture = document.getElementById("picture") 
 inputPicture.addEventListener("change", () => previewPicture())

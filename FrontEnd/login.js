@@ -19,17 +19,16 @@ formulaireLogin.addEventListener("submit", async function (event) {
     headers: {"Content-Type": "application/json"},
     body: userTest
 })
-console.log(response)
+
+let errorLogin = document.getElementById("error")
 // Nous réagissons aux deux possibilités de réponse :
 if (response.status !== 200) {
     //créer une alerte
-    alert("E-mail et/ou mot de passe incorrect(s)")
+    errorLogin.hidden = false;
 } else {
     //enregistrer le token 
     token = (await response.json()).token;
     window.localStorage.setItem("token", token);
-    console.log(response)
-    
     window.location.href = 'index.html';
     
 }

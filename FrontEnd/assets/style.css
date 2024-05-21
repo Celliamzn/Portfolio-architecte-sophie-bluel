@@ -528,3 +528,7 @@ hr {
 	height: auto !important;
 	object-fit: cover;
 }
+
+#error {
+	color: red;
+}

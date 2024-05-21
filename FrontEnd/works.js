@@ -32,7 +32,6 @@ async function getWorks() {
 getWorks();
 
 
-
 //Effet déconnexion
 logout.addEventListener("click", function() {
     localStorage.removeItem("token")
@@ -158,6 +157,26 @@ function filter(category) {
     }
 }
 
+// trigger pour ouvrir/fermer modale
+const modalContainer = document.querySelector(".modal-container")
+const modalTriggers = document.querySelectorAll(".modalTrigger");
+modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
+
+function toggleModal() {
+    modalContainer.classList.toggle("activEdit")
+    modalAdd.classList.remove("display")
+    modalAdd.classList.add("display-none")
+    modalEdit.classList.add("display")
+    modalEdit.classList.remove("display-none")
+}
+// quitter modale avec echap 
+window.addEventListener('keydown', function (e) {
+    if (e.key === "Escape" || e.key === "Esc") {
+        modalContainer.classList.remove("activEdit")
+    }
+})
+
+
 // changement entre modale de la galerie et modal de nouveau work
 const modalAdd = document.querySelector(".modal-add-work")
 const modalEdit = document.querySelector(".modal-works-edit")	
@@ -181,24 +200,6 @@ btnPrecedent.addEventListener("click", () => {
     modalEdit.classList.remove("display-none")
 })
 
-// trigger pour ouvrir/fermer modale
-const modalContainer = document.querySelector(".modal-container")
-const modalTriggers = document.querySelectorAll(".modalTrigger");
-modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
-
-function toggleModal() {
-    modalContainer.classList.toggle("activEdit")
-    modalAdd.classList.remove("display")
-    modalAdd.classList.add("display-none")
-    modalEdit.classList.add("display")
-    modalEdit.classList.remove("display-none")
-}
-// quitter modale avec echap 
-window.addEventListener('keydown', function (e) {
-    if (e.key === "Escape" || e.key === "Esc") {
-        modalContainer.classList.remove("activEdit")
-    }
-})
 
 //affichage des works dans la modale EDIT donc rajout button delete à chaque image
 async function displayWorksEdit(_works) {
@@ -248,10 +249,8 @@ const submit = document.getElementById("valider")
 let inputPicture = document.getElementById("picture") 
 inputPicture.addEventListener("change", () => previewPicture())
 const divToPreview = document.querySelector(".input-add-picture")
-//Montrer la photo choisie si bien une image + bouton VALIDER vert et utilisable
+//Montrer la photo choisie si bien une image
 function previewPicture() {
-    console.log('previewPicture')
-    console.log(inputPicture)
     if(inputPicture.files[0].type.match('image.*')) {
         
         const reader = new FileReader();
@@ -266,7 +265,7 @@ function previewPicture() {
         }
         
         reader.readAsDataURL(inputPicture.files[0]);
-        submit.disabled = false
+        
     }
 }
 
@@ -275,44 +274,37 @@ const inputCategory = document.getElementById("category")
 const formReset = document.getElementById("form-add")
 const categoryName = inputCategory.options[inputCategory.selectedIndex]
 const categoryId = inputCategory.options[inputCategory.selectedIndex].id
-
+inputPicture.addEventListener("change", () => formValidation())
+inputTitle.addEventListener("change", () => formValidation())
+inputCategory.addEventListener("change", () => formValidation())
 //vérification remplissage du formulaire, ajouter work à l'API et fermeture de la modale
 submit.addEventListener("click", async (event) => {
     event.preventDefault()
-    
     let newWork = new FormData()
-    let valide = formValidation(inputTitle.value, parseInt(inputCategory.value))
-    if (valide === true) {
-        
-        newWork.append('image', inputPicture.files[0])
-        newWork.append('title', inputTitle.value)
-        newWork.append('category', parseInt(inputCategory.value))
-        await addWork(token, newWork)
-        await getWorks()
-        await displayWorksEdit(works) 
-        
-        const formReset = document.getElementById("form-add")
-        formReset.reset()  
-        divToPreview.innerHTML = '<div class="input-add-picture"><i class="fa-regular fa-image space preview"></i><label for="picture" id="labelForPicture" >+ Ajouter photo</label><input type="file" required id="picture" accept=".png, .jpg" class="space" style="visibility: hidden;"><p class="space picture-accepted">jpg, png : 4mo max</p></div>'
-        inputPicture = document.getElementById("picture")
-        inputPicture.addEventListener("change", () => previewPicture())
-        submit.disabled = true
-        modalContainer.classList.remove("activEdit")
-    }
+    
+    newWork.append('image', inputPicture.files[0])
+    newWork.append('title', inputTitle.value)
+    newWork.append('category', parseInt(inputCategory.value))
+    await addWork(token, newWork)
+    await getWorks()
+    await displayWorksEdit(works) 
+    
+    const formReset = document.getElementById("form-add")
+    formReset.reset()  
+    divToPreview.innerHTML = '<div class="input-add-picture"><i class="fa-regular fa-image space preview"></i><label for="picture" id="labelForPicture" >+ Ajouter photo</label><input type="file" required id="picture" accept=".png, .jpg" class="space" style="visibility: hidden;"><p class="space picture-accepted">jpg, png : 4mo max</p></div>'
+    inputPicture = document.getElementById("picture")
+    inputPicture.addEventListener("change", () => previewPicture())
+    submit.disabled = true
+    modalContainer.classList.remove("activEdit")
+    
 })
 
-//alert quand titre ou catégorie vide
-function formValidation(title, categoryId) {
-    if (title.length === 0) {
-        alert("veuillez ajouter un titre")
-        console.log(categoryId)
-        return false
-    }
-    if (!categoryId) {
-        alert("Veuillez choisir une catégorie")
-        return false
-    } else {
-        return true
+
+
+//BOUTON VALIDER VERT LORSQUE TOUT LE FORMULAIRE EST REMPLI
+function formValidation() {
+    if (inputTitle.value !== "" && inputPicture.files[0] !== undefined && inputCategory.value !== "") {
+        submit.disabled = false
     }
 }
 
